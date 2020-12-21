@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_DB: github_challenge
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: /pg-compose-tmp-data
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - challengenet
+
+  admin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@postgres.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    ports:
+      - "9090:80"
+    depends_on:
+      - database
+    networks:
+      - challengenet
+      
+networks:
+  challengenet:
+    driver: bridge
