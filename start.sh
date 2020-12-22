@@ -1,0 +1,1 @@
+./wait && make migrate && make run

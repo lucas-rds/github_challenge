@@ -26,7 +26,21 @@ services:
       - database
     networks:
       - challengenet
-      
+    logging:
+      driver: none
+  
+  web:
+    build: .
+    environment:
+      POSTGRES_ADDRESS: "database"
+      WAIT_HOSTS: "database:5432"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    networks:
+      - challengenet
+
 networks:
   challengenet:
     driver: bridge

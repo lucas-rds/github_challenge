@@ -41,7 +41,9 @@ class Crud(CrudService):
 
     def get_user_by_username(self, username: int) -> UserInDB:
         user = self._get_user_by_name(username)
-        return UserInDB.from_orm(user)
+        if user:
+            return UserInDB.from_orm(user)
+        return
 
     def _get_user_by_name(self, username: str) -> DatabaseUser:
         return self.db.query(DatabaseUser).filter_by(username=username).first()

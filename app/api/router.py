@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from requests.exceptions import ConnectionError, HTTPError
+from requests.exceptions import HTTPError
 
+from app.domain.exceptions.not_found import NotFoundError
 from app.domain.models.user import UserOut
 from app.domain.models.repository import RepositoryOut
 from app.domain.usecases.get_repos_by_user import GetReposByUserUseCase, GetReposByUserDto
 from app.domain.usecases.get_repo_by_user_and_name import GetRepoByUserAndNameUseCase, GetRepoByUserAndNameDto
 from app.domain.services.github import GithubService
 from app.storage.crud import Crud
-from .injection import create_session, create_crud, create_github_service
+from .injection import create_crud, create_github_service
 
 repository_router = APIRouter(prefix="/repositories")
 
@@ -29,6 +30,8 @@ async def repositories_by_user(
     except (ConnectionError, HTTPError) as err:
         raise HTTPException(status_code=err.response.status_code,
                             detail=err.response.text)
+    except NotFoundError:
+        raise HTTPException(status_code=404, detail="not found")
 
 
 @repository_router.get("/{username}/{repository_name}", response_model=RepositoryOut)

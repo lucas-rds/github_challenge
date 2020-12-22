@@ -1,7 +1,9 @@
+from pydantic import BaseModel
 from app.domain.models.user import UserOut
 from app.domain.services.github import GithubService
 from app.domain.services.crud import CrudService
-from pydantic import BaseModel
+from app.domain.exceptions.not_found import NotFoundError
+
 
 class GetReposByUserLocallyUseCase:
     def __init__(self, crud: CrudService, username: str):
@@ -9,4 +11,7 @@ class GetReposByUserLocallyUseCase:
         self.username = username
 
     def execute(self) -> UserOut:
-        return self.crud.get_user_by_username(self.username)
+        user = self.crud.get_user_by_username(self.username)
+        if not user:
+            raise NotFoundError
+        return user
