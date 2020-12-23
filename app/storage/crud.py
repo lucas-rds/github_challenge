@@ -12,12 +12,12 @@ class Crud(CrudService):
 
     def save_repository(self, repository: Repository) -> None:
         user = self._get_user_by_name(repository.owner.login)
-        if user is None:
+        if not user:
             user = DatabaseUser(id=repository.owner.id,
                                 username=repository.owner.login)
 
         repo = self._get_repository_by_name(repository.name)
-        if repo is None:
+        if not repo:
             repo = DatabaseRepository(
                 url=repository.url,
                 name=repository.name,
