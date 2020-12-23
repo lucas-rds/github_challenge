@@ -4,7 +4,7 @@ from app.storage.crud import Crud, BaseCrud
 from app.service.github import Github, BaseGithub
 from app.domain.models.user import UserInDB
 from app.domain.usecases.get_repos_by_user_locally import GetReposByUserLocallyUseCase
-from app.domain.exceptions.not_found import NotFoundError
+from app.domain.exceptions import NotFoundError
 
 
 def test_GetReposByUserLocallyUseCase_execute_success(mocker: MockerFixture, crud: BaseCrud):

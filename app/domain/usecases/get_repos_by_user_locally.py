@@ -1,6 +1,6 @@
 from app.domain.models.user import UserOut
 from app.domain.services.base_crud import BaseCrud
-from app.domain.exceptions.not_found import NotFoundError
+from app.domain.exceptions import NotFoundError
 
 
 class GetReposByUserLocallyUseCase:

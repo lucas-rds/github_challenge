@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from requests.exceptions import HTTPError
 
-from app.domain.exceptions.not_found import NotFoundError
+from app.domain.exceptions import NotFoundError
 from app.domain.models.user import UserOut
 from app.domain.models.repository import RepositoryOut
 from app.domain.usecases.get_repos_by_user import GetReposByUserUseCase, GetReposByUserDto

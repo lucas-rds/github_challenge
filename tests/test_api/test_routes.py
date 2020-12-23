@@ -5,7 +5,7 @@ from requests.exceptions import HTTPError
 from requests import Response
 from app.domain.models.user import UserOut
 from app.domain.models.repository import RepositoryOut
-from app.domain.exceptions.not_found import NotFoundError
+from app.domain.exceptions import NotFoundError
 
 
 def test_home(client: TestClient):
