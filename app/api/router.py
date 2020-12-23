@@ -7,7 +7,7 @@ from app.domain.models.user import UserOut
 from app.domain.models.repository import RepositoryOut
 from app.domain.usecases.get_repos_by_user import GetReposByUserUseCase, GetReposByUserDto
 from app.domain.usecases.get_repo_by_user_and_name import GetRepoByUserAndNameUseCase, GetRepoByUserAndNameDto
-from app.domain.services.github import GithubService
+from app.domain.services.base_github import BaseGithub
 from app.storage.crud import Crud
 from .injection import create_crud, create_github_service
 
@@ -19,7 +19,7 @@ def repositories_by_user(
         username: str,
         from_local: bool = False,
         crud: Crud = Depends(create_crud),
-        github_repository: GithubService = Depends(create_github_service)):
+        github_repository: BaseGithub = Depends(create_github_service)):
 
     try:
         dto = GetReposByUserDto(crud=crud,
@@ -37,13 +37,13 @@ def repositories_by_user(
         raise HTTPException(status_code=404, detail="not found")
 
 
-@ repository_router.get("/{repository_name}", response_model=RepositoryOut)
+@repository_router.get("/{repository_name}", response_model=RepositoryOut)
 def repository_by_username_and_name(
         save_data: bool,
         username: str,
         repository_name: str,
         crud: Crud = Depends(create_crud),
-        github_repository: GithubService = Depends(create_github_service)):
+        github_repository: BaseGithub = Depends(create_github_service)):
 
     try:
         dto = GetRepoByUserAndNameDto(**{"crud": crud,
@@ -65,6 +65,6 @@ router = APIRouter()
 router.include_router(repository_router)
 
 
-@ router.get("/")
+@router.get("/")
 def health():
-    return "OK"
+    return {"status": "OK"}

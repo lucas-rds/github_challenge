@@ -1,13 +1,13 @@
 import pytest
 from pytest_mock import MockerFixture
-from app.storage.crud import Crud, CrudService
+from app.storage.crud import Crud, BaseCrud
 from app.domain.models.user import UserOut
 from app.domain.models.repository import RepositoryOut, Owner
-from app.domain.usecases.get_repos_by_user_remotely import GetReposByUserRemotelyUseCase, GithubService
+from app.domain.usecases.get_repos_by_user_remotely import GetReposByUserRemotelyUseCase, BaseGithub
 
 
 def test_fetch_repositories_by_username_remotelly_success(mocker: MockerFixture,
-                                                          github: GithubService):
+                                                          github: BaseGithub):
     repositories = [{"url": "repository.url",
                      "name": "repository.name",
                      "private": False,
@@ -33,7 +33,7 @@ def test_fetch_repositories_by_username_remotelly_success(mocker: MockerFixture,
 
 
 def test_fetch_repositories_by_username_remotelly_error(mocker: MockerFixture,
-                                                        github: GithubService):
+                                                        github: BaseGithub):
     mocker.patch.object(github,
                         "fetch_repositories_by_username",
                         side_effect=Exception)

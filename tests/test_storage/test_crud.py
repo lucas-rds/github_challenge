@@ -2,15 +2,17 @@ import pytest
 from unittest.mock import Mock, MagicMock
 from pytest_mock import MockerFixture
 
-from app.storage.crud import Crud
+from app.storage.crud import Crud, BaseCrud
 from app.storage.models import User as DatabaseUser, Repository as DatabaseRepository
 from app.domain.models.repository import Repository, RepositoryInDB, Owner
 
-from app.domain.services.crud import CrudService
+def test_crud_service_interface_validation():
+    with pytest.raises(TypeError):
+        BaseCrud()
 
-
-def test_crud_service_interface():
-    crud_service = CrudService()
+def test_crud_service_interface_raises(mocker: MockerFixture):
+    mocker.patch.object(BaseCrud, "__abstractmethods__", new_callable = set)
+    crud_service = BaseCrud()
     with pytest.raises(NotImplementedError):
         crud_service.save_repository(None)
 

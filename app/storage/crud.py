@@ -1,16 +1,17 @@
 from sqlalchemy.orm import Session
 from app.domain.models.repository import Repository, RepositoryInDB
 from app.domain.models.user import User, UserInDB
-from app.domain.services.crud import CrudService
+from app.domain.services.base_crud import BaseCrud
 
 from .models import User as DatabaseUser, Repository as DatabaseRepository
 
 
-class Crud(CrudService):
+class Crud(BaseCrud):
     def __init__(self, db: Session):
         self.db = db
 
     def save_repository(self, repository: Repository) -> None:
+        """Overrides BaseCrud.save_repository()"""
         user = self._get_user_by_name(repository.owner.login)
         if not user:
             user = DatabaseUser(id=repository.owner.id,

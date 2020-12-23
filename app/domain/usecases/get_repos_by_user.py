@@ -1,14 +1,14 @@
 from pydantic import BaseModel
 from app.domain.models.user import UserOut
-from app.domain.services.github import GithubService
-from app.domain.services.crud import CrudService
+from app.domain.services.base_github import BaseGithub
+from app.domain.services.base_crud import BaseCrud
 from .get_repos_by_user_locally import GetReposByUserLocallyUseCase
 from .get_repos_by_user_remotely import GetReposByUserRemotelyUseCase
 
 
 class GetReposByUserDto(BaseModel):
-    crud: CrudService
-    github_repository: GithubService
+    crud: BaseCrud
+    github_repository: BaseGithub
     username: str
     from_local: bool
 

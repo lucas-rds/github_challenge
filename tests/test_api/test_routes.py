@@ -11,16 +11,12 @@ from app.domain.exceptions.not_found import NotFoundError
 def test_home(client: TestClient):
     response = client.get("/")
     assert response.status_code == 200
-    assert response.text == '"OK"'
+    assert response.json() == {"status": "OK"}
 
 
 def test_repositories_by_user_success(mocker: MockerFixture, client: TestClient):
     user_out = UserOut(id=1, username="test")
-
-    def execute_mock(self):
-        return user_out
-
-    mocker.patch('app.api.router.GetReposByUserUseCase.execute', execute_mock)
+    mocker.patch('app.api.router.GetReposByUserUseCase.execute', return_value=user_out)
     response = client.get("/repositories/?username=test&from_local=true")
     assert response.status_code == 200
     assert response.json() == user_out.dict()
@@ -70,11 +66,8 @@ def test_repository_by_username_and_name_success(mocker: MockerFixture, client: 
                              stargazers_count=1,
                              watchers_count=1)
 
-    def execute_mock(self):
-        return repo_out
-
     mocker.patch(
-        'app.api.router.GetRepoByUserAndNameUseCase.execute', execute_mock)
+        'app.api.router.GetRepoByUserAndNameUseCase.execute', return_value=repo_out)
     response = client.get("/repositories/repo_name_test/?username=test&save_data=true")
     assert response.status_code == 200
     assert response.json() == repo_out.dict()

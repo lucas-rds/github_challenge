@@ -1,12 +1,12 @@
 from app.domain.models.repository import RepositoryOut, Repository
-from app.domain.services.github import GithubService
-from app.domain.services.crud import CrudService
+from app.domain.services.base_github import BaseGithub
+from app.domain.services.base_crud import BaseCrud
 from pydantic import BaseModel
 
 
 class GetRepoByUserAndNameDto(BaseModel):
-    crud: CrudService
-    github_repository: GithubService
+    crud: BaseCrud
+    github_repository: BaseGithub
     username: str
     repository_name: str
     save_data: bool

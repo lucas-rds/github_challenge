@@ -1,7 +1,7 @@
 import pytest
 from pytest_mock import MockerFixture
-from app.storage.crud import Crud, CrudService
-from app.service.github import GithubFetchService, GithubService
+from app.storage.crud import Crud, BaseCrud
+from app.service.github import Github, BaseGithub
 from app.domain.models.user import UserOut
 from app.domain.usecases.get_repo_by_user_and_name import GetRepoByUserAndNameUseCase, GetRepoByUserAndNameDto
 
@@ -20,8 +20,8 @@ repository = {"url": "repository.url",
 
 
 def test_GetRepoByUserAndNameUseCase_execute(mocker: MockerFixture,
-                                             crud: CrudService,
-                                             github: GithubService):
+                                             crud: BaseCrud,
+                                             github: BaseGithub):
     dto = GetRepoByUserAndNameDto(crud=crud,
                                   github_repository=github,
                                   username='test',
@@ -38,8 +38,8 @@ def test_GetRepoByUserAndNameUseCase_execute(mocker: MockerFixture,
 
 
 def test_GetRepoByUserAndNameUseCase_execute_save_data(mocker: MockerFixture,
-                                                       crud: CrudService,
-                                                       github: GithubService):
+                                                       crud: BaseCrud,
+                                                       github: BaseGithub):
     dto = GetRepoByUserAndNameDto(crud=crud,
                                   github_repository=github,
                                   username='test',

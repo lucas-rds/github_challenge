@@ -1,12 +1,12 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from app.service.github import GithubFetchService
+from app.service.github import Github
 from app.storage.crud import Crud
 from app.storage.database import CreateSession
 
-from app.domain.services.crud import CrudService
-from app.domain.services.github import GithubService
+from app.domain.services.base_crud import BaseCrud
+from app.domain.services.base_github import BaseGithub
 
 def create_session() -> Session:
     db = CreateSession()
@@ -16,9 +16,9 @@ def create_session() -> Session:
         db.close()
 
 
-def create_crud(db: Session = Depends(create_session)) -> CrudService:
+def create_crud(db: Session = Depends(create_session)) -> BaseCrud:
     return Crud(db)
 
 
-def create_github_service() -> GithubService:
-    return GithubFetchService()
+def create_github_service() -> BaseGithub:
+    return Github()

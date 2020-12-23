@@ -4,8 +4,8 @@ from unittest.mock import Mock, MagicMock
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from app.storage.crud import Crud, CrudService
-from app.service.github import GithubFetchService, GithubService
+from app.storage.crud import Crud, BaseCrud
+from app.service.github import Github, BaseGithub
 from app.main import app
 
 
@@ -16,19 +16,13 @@ def client() -> TestClient:
 
 @pytest.fixture
 def db() -> Mock:
-    mock = Mock()
-    mock.add = MagicMock()
-    mock.commit = MagicMock()
-    mock.query = MagicMock(return_value=MagicMock())
-    mock.query.filter_by = MagicMock(return_value=MagicMock())
-    mock.query.filter_by.first = MagicMock(return_value=MagicMock())
-    return mock
+    return Mock()
 
 
 @pytest.fixture
-def crud(db: Mock) -> CrudService:
+def crud(db: Mock) -> BaseCrud:
     return Crud(db)
 
 @pytest.fixture
-def github() -> GithubService:
-    return GithubFetchService()
+def github() -> BaseGithub:
+    return Github()

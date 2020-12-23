@@ -3,10 +3,10 @@ import requests
 import json
 
 from app.config import GITHUB_URL
-from app.domain.services.github import GithubService
+from app.domain.services.base_github import BaseGithub
 
 
-class GithubFetchService(GithubService):
+class Github(BaseGithub):
     def fetch_repositories_by_username(self, username: str) -> json:
         response = requests.get(f"{GITHUB_URL}/users/{username}/repos")
         response.raise_for_status()

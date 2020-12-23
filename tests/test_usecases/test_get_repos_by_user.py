@@ -1,7 +1,7 @@
 import pytest
 from pytest_mock import MockerFixture
-from app.storage.crud import Crud, CrudService
-from app.service.github import GithubFetchService, GithubService
+from app.storage.crud import Crud, BaseCrud
+from app.service.github import Github, BaseGithub
 from app.domain.models.user import UserOut
 from app.domain.usecases.get_repos_by_user import GetReposByUserUseCase, GetReposByUserDto
 
@@ -11,8 +11,8 @@ from app.domain.usecases.get_repos_by_user import GetReposByUserUseCase, GetRepo
     (True, "GetReposByUserLocallyUseCase"),
 ])
 def test_fetch_repositories_by_username_remotelly(mocker: MockerFixture,
-                                                  crud: CrudService,
-                                                  github: GithubService,
+                                                  crud: BaseCrud,
+                                                  github: BaseGithub,
                                                   locally_or_remotelly: bool,
                                                   class_name: str):
     username = 'test'

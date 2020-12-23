@@ -1,10 +1,10 @@
 from app.domain.models.user import UserOut
-from app.domain.services.github import GithubService
-from app.domain.services.crud import CrudService
+from app.domain.services.base_github import BaseGithub
+from app.domain.services.base_crud import BaseCrud
 
 
 class GetReposByUserRemotelyUseCase:
-    def __init__(self, github: GithubService, username: str):
+    def __init__(self, github: BaseGithub, username: str):
         self.github = github
         self.username = username
 

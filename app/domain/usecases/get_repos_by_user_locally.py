@@ -1,10 +1,10 @@
 from app.domain.models.user import UserOut
-from app.domain.services.crud import CrudService
+from app.domain.services.base_crud import BaseCrud
 from app.domain.exceptions.not_found import NotFoundError
 
 
 class GetReposByUserLocallyUseCase:
-    def __init__(self, crud: CrudService, username: str):
+    def __init__(self, crud: BaseCrud, username: str):
         self.crud = crud
         self.username = username
 
