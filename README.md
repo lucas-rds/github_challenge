@@ -21,7 +21,7 @@ Após feito o setup do python e do banco, basta utilizar o comando `make migrate
 Com a aplicação rodando, um exemplo de uso com o usuário do github lucas-rds seria:
 
 ### Acessando
-Acesse http://127.0.0.1:8000/repositories/?username=lucas-rds&from_local=false para visualizar os repositorios desse usuário, note o parâmetro from_local=false, ele indica que os repositórios listados serão tirados da api do github.
+Acesse http://127.0.0.1:8000/repositories/?username=lucas-rds&from_local=false para visualizar os repositorios do usuário de username lucas-rds, note o parâmetro from_local=false, ele indica que os repositórios listados foram consultados da api do github.
 
 Vamos usar o repositório chat-bot-agenda do lucas-rds para o próximo exemplo:
 
@@ -36,7 +36,7 @@ Os endpoints disponíveis:
 Endpoint   | query params |
 --------- | ------ |
 /repositories | ?username={string:required}&from_local={boolean} | 
-/repositories/{repository_name} | ?username={string:required}&?save_data={boolean:required} |
+/repositories/{repository_name} | ?username={string:required}&save_data={boolean:required} |
 
 ## Contribuindo
 ### Setup
