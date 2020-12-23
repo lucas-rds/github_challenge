@@ -1,3 +1,6 @@
 __pycache__/
 .venv/
 .vscode/settings.json
+
+.coverage
+coverage/

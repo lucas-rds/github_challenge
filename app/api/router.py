@@ -15,27 +15,30 @@ repository_router = APIRouter(prefix="/repositories")
 
 
 @repository_router.get("/", response_model=UserOut)
-async def repositories_by_user(
+def repositories_by_user(
         username: str,
         from_local: bool = False,
         crud: Crud = Depends(create_crud),
         github_repository: GithubService = Depends(create_github_service)):
 
     try:
-        dto = GetReposByUserDto(**{"crud": crud,
-                                   "github_repository": github_repository,
-                                   "username": username,
-                                   "from_local": from_local})
+        dto = GetReposByUserDto(crud=crud,
+                                github_repository=github_repository,
+                                username=username,
+                                from_local=from_local)
         return GetReposByUserUseCase(dto).execute()
-    except (ConnectionError, HTTPError) as err:
+    except ConnectionError:
+        raise HTTPException(status_code=503,
+                            detail="Github service may be unavailable, try again later")
+    except HTTPError as err:
         raise HTTPException(status_code=err.response.status_code,
                             detail=err.response.text)
     except NotFoundError:
         raise HTTPException(status_code=404, detail="not found")
 
 
-@repository_router.get("/{username}/{repository_name}", response_model=RepositoryOut)
-async def repository_by_username_and_name(
+@ repository_router.get("/{username}/{repository_name}", response_model=RepositoryOut)
+def repository_by_username_and_name(
         save_data: bool,
         username: str,
         repository_name: str,
@@ -50,7 +53,10 @@ async def repository_by_username_and_name(
                                          "save_data": save_data})
 
         return GetRepoByUserAndNameUseCase(dto).execute()
-    except (ConnectionError, HTTPError) as err:
+    except ConnectionError:
+        raise HTTPException(status_code=503,
+                            detail="Github service may be unavailable, try again later")
+    except HTTPError as err:
         raise HTTPException(status_code=err.response.status_code,
                             detail=err.response.text)
 
@@ -59,6 +65,6 @@ router = APIRouter()
 router.include_router(repository_router)
 
 
-@router.get("/")
-async def health():
+@ router.get("/")
+def health():
     return "OK"

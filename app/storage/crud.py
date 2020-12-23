@@ -5,8 +5,6 @@ from app.domain.services.crud import CrudService
 
 from .models import User as DatabaseUser, Repository as DatabaseRepository
 
-from .database import CreateSession
-
 
 class Crud(CrudService):
     def __init__(self, db: Session):

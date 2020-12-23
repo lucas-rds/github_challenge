@@ -7,3 +7,6 @@ create-migration:
 
 migrate:
 	alembic upgrade head
+
+test:
+	pytest -v --cov-report term-missing --cov-report html:coverage --cov app/

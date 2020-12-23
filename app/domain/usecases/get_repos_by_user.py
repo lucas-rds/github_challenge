@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-
 from app.domain.models.user import UserOut
 from app.domain.services.github import GithubService
 from app.domain.services.crud import CrudService
