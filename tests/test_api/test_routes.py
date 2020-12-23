@@ -75,7 +75,7 @@ def test_repository_by_username_and_name_success(mocker: MockerFixture, client: 
 
     mocker.patch(
         'app.api.router.GetRepoByUserAndNameUseCase.execute', execute_mock)
-    response = client.get("/repositories/test/repo_name_test/?save_data=true")
+    response = client.get("/repositories/repo_name_test/?username=test&save_data=true")
     assert response.status_code == 200
     assert response.json() == repo_out.dict()
 
@@ -96,6 +96,6 @@ def test_repository_by_username_and_name_fail(mocker: MockerFixture,
     mocker.patch(
         'app.api.router.GetRepoByUserAndNameUseCase.execute',
         side_effect=err)
-    response = client.get("/repositories/test/repo_name_test/?save_data=true")
+    response = client.get("/repositories/repo_name_test/?username=test&save_data=true")
     assert response.status_code == expected_status_code
     assert response.json() == expected_response

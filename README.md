@@ -18,6 +18,26 @@ Você pode alterar os valores acima como desejado, porém ao faze-lo, deve alter
 
 Após feito o setup do python e do banco, basta utilizar o comando `make migrate && make run` caso esteja no linux, ou `Winfile.bat migrate` e `Winfile.bat run` caso esteja em ambiente windows.
 
+Com a aplicação rodando, um exemplo de uso com o usuário do github lucas-rds seria:
+
+### Acessando
+Acesse http://127.0.0.1:8000/repositories/?username=lucas-rds&from_local=false para visualizar os repositorios desse usuário, note o parâmetro from_local=false, ele indica que os repositórios listados serão tirados da api do github.
+
+Vamos usar o repositório chat-bot-agenda do lucas-rds para o próximo exemplo:
+
+Acesse http://127.0.0.1:8000/repositories/chat-bot-agenda/?username=lucas-rds&save_data=true, note o parâmetro save_data=true, que serve para salvar o repositório no banco de dados local.
+
+Agora com o repositório salvo, podemos utilizar o endpoint anterior com o parametro from_local=true para retornar apenas os repositórios da base de dados e não do github:
+
+http://127.0.0.1:8000/repositories/?username=lucas-rds&from_local=true
+
+### Endpoints:
+Os endpoints disponíveis:
+Endpoint   | query params |
+--------- | ------ |
+/repositories | ?username={string:required}&from_local={boolean} | 
+/repositories/{repository_name} | ?username={string:required}&?save_data={boolean:required} |
+
 ## Contribuindo
 ### Setup
 Utilizando o python 3.9.1, basta instalar as dependências com: `pip install -r requirements.txt`, é recomendado o uso de um ambiente isolado com `virtualenv` ou `pyenv`. Para rodar a aplicação siga as instruções no tópico [Usando](#usando) acima

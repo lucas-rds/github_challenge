@@ -37,7 +37,7 @@ def repositories_by_user(
         raise HTTPException(status_code=404, detail="not found")
 
 
-@ repository_router.get("/{username}/{repository_name}", response_model=RepositoryOut)
+@ repository_router.get("/{repository_name}", response_model=RepositoryOut)
 def repository_by_username_and_name(
         save_data: bool,
         username: str,
