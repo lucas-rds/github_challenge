@@ -21,6 +21,8 @@ Após feito o setup do python e do banco, basta utilizar o comando `make migrate
 ## Contribuindo
 ### Setup
 Utilizando o python 3.9.1, basta instalar as dependências com: `pip install -r requirements.txt`, é recomendado o uso de um ambiente isolado com `virtualenv` ou `pyenv`.
+
+### Debug VSCode
 Caso esteja usando o Visual Studio Code, basta rodar o modo debug, o projeto já possui uma pasta .vscode com launch.json, que pode ser alterado como desejado para se adequar a seu ambiente.
 
 
